@@ -1,12 +1,13 @@
-import { PlusCircle, List, BarChart3 } from "lucide-react";
+import { PlusCircle, List, BarChart3, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type TabId = "register" | "history" | "summary";
+export type TabId = "register" | "history" | "summary" | "coming-soon";
 
 const tabs: { id: TabId; label: string; icon: React.ComponentType<any> }[] = [
   { id: "register", label: "Registrar", icon: PlusCircle },
   { id: "history", label: "Historial", icon: List },
   { id: "summary", label: "Resumen", icon: BarChart3 },
+  { id: "coming-soon", label: "Próximo", icon: Rocket },
 ];
 
 interface BottomNavProps {
