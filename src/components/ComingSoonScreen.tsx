@@ -340,6 +340,63 @@ export function ComingSoonScreen() {
             </div>
           </div>
         ))}
+        {/* Ideas de mejora */}
+        <div>
+          <h2 className="text-base font-bold text-foreground mb-3">💡 Mis ideas de mejora</h2>
+          <div className="bg-card rounded-xl border border-border p-4 shadow-sm space-y-4">
+            <p className="text-xs text-muted-foreground">
+              ¿Tienes una idea que no está en la lista? ¡Anótala aquí!
+            </p>
+
+            {/* Input */}
+            <div className="flex gap-2">
+              <textarea
+                value={newIdea}
+                onChange={(e) => setNewIdea(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); addIdea(); } }}
+                placeholder="Escribe tu idea..."
+                rows={2}
+                className="flex-1 resize-none rounded-xl border border-border bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+              <button
+                onClick={addIdea}
+                disabled={!newIdea.trim()}
+                className="w-11 h-11 self-end rounded-xl bg-primary flex items-center justify-center shrink-0 disabled:opacity-40 active:scale-95 transition-transform shadow-sm"
+              >
+                <Send size={16} className="text-primary-foreground" />
+              </button>
+            </div>
+
+            {/* Ideas list */}
+            {ideas.length === 0 ? (
+              <p className="text-center text-xs text-muted-foreground py-3">
+                Aún no hay ideas guardadas ✨
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {ideas.map((idea, i) => (
+                  <div
+                    key={idea.id}
+                    className="flex items-start gap-2.5 bg-muted/50 rounded-xl px-3 py-2.5 animate-fade-in"
+                    style={{ animationDelay: `${i * 40}ms`, animationFillMode: "both" }}
+                  >
+                    <span className="text-base mt-0.5">💡</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-foreground leading-snug">{idea.text}</p>
+                      <p className="text-[11px] text-muted-foreground mt-0.5">{idea.date}</p>
+                    </div>
+                    <button
+                      onClick={() => deleteIdea(idea.id)}
+                      className="p-1 rounded-lg hover:bg-destructive/10 transition-colors shrink-0 mt-0.5"
+                    >
+                      <Trash2 size={13} className="text-muted-foreground hover:text-destructive" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
