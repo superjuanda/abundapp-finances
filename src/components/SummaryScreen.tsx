@@ -114,12 +114,15 @@ export function SummaryScreen({ expenses }: SummaryScreenProps) {
             </div>
             {/* Legend */}
             <div className="flex justify-center gap-6 mt-2">
-              {byUser.map((u, i) => (
-                <div key={u.name} className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full" style={{ background: CHART_COLORS[i % CHART_COLORS.length] }} />
-                  <span className="text-xs font-medium">{u.name}: ${u.value.toLocaleString()}</span>
-                </div>
-              ))}
+              {byUser.map((u, i) => {
+                const profile = USER_PROFILES[u.name] || { emoji: "👤" };
+                return (
+                  <div key={u.name} className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ background: CHART_COLORS[i % CHART_COLORS.length] }} />
+                    <span className="text-xs font-medium">{profile.emoji} {u.name}: ${u.value.toLocaleString()}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
