@@ -1,14 +1,29 @@
 import { useState } from "react";
-import { ThumbsUp, ThumbsDown, Sparkles, ScanLine, Wallet, BarChart3, Lightbulb, Target, Zap, Layout, Trophy, Download, Users, Tags, Wifi, Bell, GripVertical, Palette, Search, Paperclip } from "lucide-react";
+import { ThumbsUp, ThumbsDown, Sparkles, ScanLine, Wallet, BarChart3, Lightbulb, Target, Zap, Layout, Trophy, Download, Users, Tags, Wifi, Bell, GripVertical, Palette, Search, Paperclip, Send, Trash2 } from "lucide-react";
 import abundappWhite from "@/assets/Abundapp_white.png";
 
 const STORAGE_KEY = "abundapp_votes";
+const IDEAS_KEY = "abundapp_ideas";
+
+interface Idea {
+  id: string;
+  text: string;
+  date: string;
+}
 
 function loadVotes(): Record<string, number> {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
   } catch {
     return {};
+  }
+}
+
+function loadIdeas(): Idea[] {
+  try {
+    return JSON.parse(localStorage.getItem(IDEAS_KEY) || "[]");
+  } catch {
+    return [];
   }
 }
 
