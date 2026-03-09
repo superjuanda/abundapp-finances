@@ -74,22 +74,22 @@ export function HistoryScreen({ expenses, onUpdate, onDelete }: HistoryScreenPro
         ) : (
           monthExpenses.map((expense, i) => {
             const cat = CATEGORIES.find((c) => c.id === expense.category);
-            const CatIcon = cat?.icon;
+            const userProfile = USER_PROFILES[expense.user] || { emoji: "👤" };
             return (
               <div
                 key={expense.id}
                 className="bg-card rounded-2xl p-4 card-shadow flex items-center gap-3 animate-slide-up"
                 style={{ animationDelay: `${i * 50}ms`, animationFillMode: "both" }}
               >
-                {/* Icon */}
-                <div className="bg-primary/10 rounded-xl p-2.5 shrink-0">
-                  {CatIcon && <CatIcon size={22} className="text-primary" />}
+                {/* Category emoji */}
+                <div className="bg-primary/10 rounded-xl p-2.5 shrink-0 text-2xl flex items-center justify-center w-12 h-12">
+                  {cat?.emoji || "💸"}
                 </div>
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-sm truncate">{expense.subcategory}</p>
                   <p className="text-xs text-muted-foreground">
-                    {expense.user} · {format(new Date(expense.date), "d MMM", { locale: es })}
+                    {userProfile.emoji} {expense.user} · {format(new Date(expense.date), "d MMM", { locale: es })}
                   </p>
                 </div>
                 {/* Amount */}
