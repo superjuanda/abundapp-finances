@@ -3,7 +3,7 @@ import { format, startOfMonth, endOfMonth, addMonths, subMonths } from "date-fns
 import { es } from "date-fns/locale";
 import { ChevronLeft, ChevronRight, Users, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES } from "@/data/categories";
+import { CATEGORIES, USER_PROFILES } from "@/data/categories";
 import type { Expense } from "@/hooks/useExpenses";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 import logoWhite from "@/assets/Abundapp_white.png";
@@ -41,14 +41,15 @@ export function SummaryScreen({ expenses }: SummaryScreenProps) {
   }, [monthExpenses]);
 
   const topCategories = useMemo(() => {
-    const map: Record<string, number> = {};
+    const map: Record<string, { value: number; emoji: string }> = {};
     monthExpenses.forEach((e) => {
       const cat = CATEGORIES.find((c) => c.id === e.category);
-      const name = cat?.name || e.category;
-      map[name] = (map[name] || 0) + e.amount;
+      const name = cat ? `${cat.emoji} ${cat.name}` : e.category;
+      if (!map[name]) map[name] = { value: 0, emoji: cat?.emoji || "💸" };
+      map[name].value += e.amount;
     });
     return Object.entries(map)
-      .map(([name, value]) => ({ name, value }))
+      .map(([name, { value }]) => ({ name, value }))
       .sort((a, b) => b.value - a.value)
       .slice(0, 5);
   }, [monthExpenses]);
@@ -114,12 +115,15 @@ export function SummaryScreen({ expenses }: SummaryScreenProps) {
             </div>
             {/* Legend */}
             <div className="flex justify-center gap-6 mt-2">
-              {byUser.map((u, i) => (
-                <div key={u.name} className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full" style={{ background: CHART_COLORS[i % CHART_COLORS.length] }} />
-                  <span className="text-xs font-medium">{u.name}: ${u.value.toLocaleString()}</span>
-                </div>
-              ))}
+              {byUser.map((u, i) => {
+                const profile = USER_PROFILES[u.name] || { emoji: "👤" };
+                return (
+                  <div key={u.name} className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ background: CHART_COLORS[i % CHART_COLORS.length] }} />
+                    <span className="text-xs font-medium">{profile.emoji} {u.name}: ${u.value.toLocaleString()}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

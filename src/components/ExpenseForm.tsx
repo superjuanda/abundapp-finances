@@ -10,8 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { CATEGORIES, USERS } from "@/data/categories";
+import { CATEGORIES, USER_PROFILES, USERS } from "@/data/categories";
 import { toast } from "@/hooks/use-toast";
+import { CelebrationToastContent } from "@/components/CelebrationToast";
 import type { Expense } from "@/hooks/useExpenses";
 import logoWhite from "@/assets/Abundapp_white.png";
 
@@ -56,13 +57,25 @@ export function ExpenseForm({ onSubmit, initial, submitLabel = "Registrar Gasto"
       notes,
     });
     if (!initial) {
+      const userProfile = USER_PROFILES[user] || { emoji: "👤", color: "" };
+      toast({
+        duration: 3500,
+        description: (
+          <CelebrationToastContent
+            categoryName={selectedCat?.name || category}
+            categoryEmoji={selectedCat?.emoji || "💸"}
+            amount={numAmount}
+            userName={user}
+            userEmoji={userProfile.emoji}
+          />
+        ),
+      });
       setUser("");
       setCategory("");
       setSubcategory("");
       setAmount("");
       setNotes("");
       setDate(new Date());
-      toast({ title: "✅ Gasto registrado", description: `$${numAmount.toLocaleString()} en ${selectedCat?.name}` });
     }
   };
 
@@ -105,9 +118,17 @@ export function ExpenseForm({ onSubmit, initial, submitLabel = "Registrar Gasto"
                 <SelectValue placeholder="Seleccionar usuario" />
               </SelectTrigger>
               <SelectContent>
-                {USERS.map((u) => (
-                  <SelectItem key={u} value={u} className="touch-target">{u}</SelectItem>
-                ))}
+                {USERS.map((u) => {
+                  const profile = USER_PROFILES[u] || { emoji: "👤" };
+                  return (
+                    <SelectItem key={u} value={u} className="touch-target">
+                      <span className="flex items-center gap-2">
+                        <span className="text-base">{profile.emoji}</span>
+                        {u}
+                      </span>
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
@@ -123,7 +144,7 @@ export function ExpenseForm({ onSubmit, initial, submitLabel = "Registrar Gasto"
                 {CATEGORIES.map((c) => (
                   <SelectItem key={c.id} value={c.id} className="touch-target">
                     <span className="flex items-center gap-2">
-                      <c.icon size={16} className="text-primary" />
+                      <span className="text-base">{c.emoji}</span>
                       {c.name}
                     </span>
                   </SelectItem>
@@ -141,7 +162,12 @@ export function ExpenseForm({ onSubmit, initial, submitLabel = "Registrar Gasto"
               </SelectTrigger>
               <SelectContent>
                 {subcategories.map((s) => (
-                  <SelectItem key={s} value={s} className="touch-target">{s}</SelectItem>
+                  <SelectItem key={s.name} value={s.name} className="touch-target">
+                    <span className="flex items-center gap-2">
+                      <span className="text-base">{s.emoji}</span>
+                      {s.name}
+                    </span>
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>

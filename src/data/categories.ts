@@ -7,29 +7,190 @@ import {
 export interface Category {
   id: string;
   name: string;
+  emoji: string;
   icon: React.ComponentType<any>;
-  subcategories: string[];
+  subcategories: { name: string; emoji: string }[];
 }
 
 export const CATEGORIES: Category[] = [
-  { id: "alimentacion", name: "Alimentación", icon: UtensilsCrossed, subcategories: ["Supermercado", "Restaurantes", "Delivery", "Café", "Snacks", "Mercado"] },
-  { id: "transporte", name: "Transporte", icon: Car, subcategories: ["Gasolina", "Transporte público", "Taxi/Uber", "Mantenimiento", "Parqueadero", "Peajes"] },
-  { id: "vivienda", name: "Vivienda", icon: Home, subcategories: ["Arriendo", "Hipoteca", "Reparaciones", "Administración", "Muebles"] },
-  { id: "servicios", name: "Servicios", icon: Zap, subcategories: ["Agua", "Luz", "Gas", "Internet", "Celular", "Streaming"] },
-  { id: "salud", name: "Salud", icon: Heart, subcategories: ["Medicamentos", "Consultas", "Exámenes", "Seguro médico", "Gym", "Dentista"] },
-  { id: "educacion", name: "Educación", icon: GraduationCap, subcategories: ["Matrícula", "Libros", "Cursos online", "Material escolar", "Tutorías"] },
-  { id: "entretenimiento", name: "Entretenimiento", icon: Gamepad2, subcategories: ["Cine", "Conciertos", "Suscripciones", "Juegos", "Viajes", "Fiestas"] },
-  { id: "ropa", name: "Ropa", icon: Shirt, subcategories: ["Ropa casual", "Ropa formal", "Zapatos", "Accesorios", "Ropa deportiva"] },
-  { id: "tecnologia", name: "Tecnología", icon: Smartphone, subcategories: ["Dispositivos", "Apps", "Accesorios tech", "Reparaciones", "Software"] },
-  { id: "mascotas", name: "Mascotas", icon: PawPrint, subcategories: ["Comida", "Veterinario", "Accesorios", "Peluquería", "Medicamentos"] },
-  { id: "hogar", name: "Hogar", icon: Sofa, subcategories: ["Limpieza", "Decoración", "Electrodomésticos", "Jardín", "Herramientas"] },
-  { id: "regalos", name: "Regalos", icon: Gift, subcategories: ["Cumpleaños", "Navidad", "Aniversario", "Otros regalos"] },
-  { id: "ahorro", name: "Ahorro/Inversión", icon: TrendingUp, subcategories: ["Ahorro", "Inversiones", "Fondo de emergencia", "CDT", "Acciones"] },
-  { id: "impuestos", name: "Impuestos", icon: Receipt, subcategories: ["Renta", "IVA", "Predial", "Vehículo", "Otros impuestos"] },
-  { id: "seguros", name: "Seguros", icon: Shield, subcategories: ["Vida", "Auto", "Hogar", "Salud", "Viaje"] },
-  { id: "deudas", name: "Deudas", icon: CreditCard, subcategories: ["Tarjeta de crédito", "Préstamo personal", "Préstamo auto", "Otros créditos"] },
-  { id: "otros", name: "Otros", icon: MoreHorizontal, subcategories: ["Donaciones", "Propinas", "Imprevistos", "Otros"] },
+  {
+    id: "alimentacion", name: "Alimentación", emoji: "🍔", icon: UtensilsCrossed,
+    subcategories: [
+      { name: "Supermercado", emoji: "🛒" },
+      { name: "Restaurantes", emoji: "🍽️" },
+      { name: "Delivery", emoji: "🛵" },
+      { name: "Café", emoji: "☕" },
+      { name: "Snacks", emoji: "🍿" },
+      { name: "Mercado", emoji: "🥦" },
+    ]
+  },
+  {
+    id: "transporte", name: "Transporte", emoji: "🚗", icon: Car,
+    subcategories: [
+      { name: "Gasolina", emoji: "⛽" },
+      { name: "Transporte público", emoji: "🚌" },
+      { name: "Taxi/Uber", emoji: "🚕" },
+      { name: "Mantenimiento", emoji: "🔧" },
+      { name: "Parqueadero", emoji: "🅿️" },
+      { name: "Peajes", emoji: "🛣️" },
+    ]
+  },
+  {
+    id: "vivienda", name: "Vivienda", emoji: "🏠", icon: Home,
+    subcategories: [
+      { name: "Arriendo", emoji: "🏘️" },
+      { name: "Hipoteca", emoji: "🏦" },
+      { name: "Reparaciones", emoji: "🔨" },
+      { name: "Administración", emoji: "📋" },
+      { name: "Muebles", emoji: "🛋️" },
+    ]
+  },
+  {
+    id: "servicios", name: "Servicios", emoji: "⚡", icon: Zap,
+    subcategories: [
+      { name: "Agua", emoji: "💧" },
+      { name: "Luz", emoji: "💡" },
+      { name: "Gas", emoji: "🔥" },
+      { name: "Internet", emoji: "📡" },
+      { name: "Celular", emoji: "📱" },
+      { name: "Streaming", emoji: "📺" },
+    ]
+  },
+  {
+    id: "salud", name: "Salud", emoji: "❤️", icon: Heart,
+    subcategories: [
+      { name: "Medicamentos", emoji: "💊" },
+      { name: "Consultas", emoji: "🩺" },
+      { name: "Exámenes", emoji: "🔬" },
+      { name: "Seguro médico", emoji: "🏥" },
+      { name: "Gym", emoji: "🏋️" },
+      { name: "Dentista", emoji: "🦷" },
+    ]
+  },
+  {
+    id: "educacion", name: "Educación", emoji: "🎓", icon: GraduationCap,
+    subcategories: [
+      { name: "Matrícula", emoji: "📝" },
+      { name: "Libros", emoji: "📚" },
+      { name: "Cursos online", emoji: "💻" },
+      { name: "Material escolar", emoji: "✏️" },
+      { name: "Tutorías", emoji: "👩‍🏫" },
+    ]
+  },
+  {
+    id: "entretenimiento", name: "Entretenimiento", emoji: "🎮", icon: Gamepad2,
+    subcategories: [
+      { name: "Cine", emoji: "🎬" },
+      { name: "Conciertos", emoji: "🎵" },
+      { name: "Suscripciones", emoji: "🔔" },
+      { name: "Juegos", emoji: "🕹️" },
+      { name: "Viajes", emoji: "✈️" },
+      { name: "Fiestas", emoji: "🎉" },
+    ]
+  },
+  {
+    id: "ropa", name: "Ropa", emoji: "👕", icon: Shirt,
+    subcategories: [
+      { name: "Ropa casual", emoji: "👔" },
+      { name: "Ropa formal", emoji: "👗" },
+      { name: "Zapatos", emoji: "👟" },
+      { name: "Accesorios", emoji: "👜" },
+      { name: "Ropa deportiva", emoji: "🧢" },
+    ]
+  },
+  {
+    id: "tecnologia", name: "Tecnología", emoji: "📱", icon: Smartphone,
+    subcategories: [
+      { name: "Dispositivos", emoji: "💻" },
+      { name: "Apps", emoji: "📲" },
+      { name: "Accesorios tech", emoji: "🎧" },
+      { name: "Reparaciones", emoji: "🔧" },
+      { name: "Software", emoji: "⚙️" },
+    ]
+  },
+  {
+    id: "mascotas", name: "Mascotas", emoji: "🐾", icon: PawPrint,
+    subcategories: [
+      { name: "Comida", emoji: "🦴" },
+      { name: "Veterinario", emoji: "💉" },
+      { name: "Accesorios", emoji: "🐶" },
+      { name: "Peluquería", emoji: "✂️" },
+      { name: "Medicamentos", emoji: "💊" },
+    ]
+  },
+  {
+    id: "hogar", name: "Hogar", emoji: "🛋️", icon: Sofa,
+    subcategories: [
+      { name: "Limpieza", emoji: "🧹" },
+      { name: "Decoración", emoji: "🖼️" },
+      { name: "Electrodomésticos", emoji: "🍳" },
+      { name: "Jardín", emoji: "🌱" },
+      { name: "Herramientas", emoji: "🔩" },
+    ]
+  },
+  {
+    id: "regalos", name: "Regalos", emoji: "🎁", icon: Gift,
+    subcategories: [
+      { name: "Cumpleaños", emoji: "🎂" },
+      { name: "Navidad", emoji: "🎄" },
+      { name: "Aniversario", emoji: "💑" },
+      { name: "Otros regalos", emoji: "🎀" },
+    ]
+  },
+  {
+    id: "ahorro", name: "Ahorro/Inversión", emoji: "📈", icon: TrendingUp,
+    subcategories: [
+      { name: "Ahorro", emoji: "🐷" },
+      { name: "Inversiones", emoji: "📊" },
+      { name: "Fondo de emergencia", emoji: "🆘" },
+      { name: "CDT", emoji: "🏦" },
+      { name: "Acciones", emoji: "📉" },
+    ]
+  },
+  {
+    id: "impuestos", name: "Impuestos", emoji: "🧾", icon: Receipt,
+    subcategories: [
+      { name: "Renta", emoji: "📄" },
+      { name: "IVA", emoji: "💰" },
+      { name: "Predial", emoji: "🏢" },
+      { name: "Vehículo", emoji: "🚗" },
+      { name: "Otros impuestos", emoji: "📑" },
+    ]
+  },
+  {
+    id: "seguros", name: "Seguros", emoji: "🛡️", icon: Shield,
+    subcategories: [
+      { name: "Vida", emoji: "💚" },
+      { name: "Auto", emoji: "🚘" },
+      { name: "Hogar", emoji: "🏡" },
+      { name: "Salud", emoji: "🏥" },
+      { name: "Viaje", emoji: "🧳" },
+    ]
+  },
+  {
+    id: "deudas", name: "Deudas", emoji: "💳", icon: CreditCard,
+    subcategories: [
+      { name: "Tarjeta de crédito", emoji: "💳" },
+      { name: "Préstamo personal", emoji: "🤝" },
+      { name: "Préstamo auto", emoji: "🚙" },
+      { name: "Otros créditos", emoji: "📜" },
+    ]
+  },
+  {
+    id: "otros", name: "Otros", emoji: "🔮", icon: MoreHorizontal,
+    subcategories: [
+      { name: "Donaciones", emoji: "🙏" },
+      { name: "Propinas", emoji: "💵" },
+      { name: "Imprevistos", emoji: "😱" },
+      { name: "Otros", emoji: "❓" },
+    ]
+  },
 ];
+
+export const USER_PROFILES: Record<string, { emoji: string; color: string }> = {
+  "Juan David": { emoji: "👨", color: "hsl(var(--primary))" },
+  "Nicolle": { emoji: "👩", color: "hsl(var(--accent))" },
+};
 
 export const USERS = ["Juan David", "Nicolle"] as const;
 export type User = (typeof USERS)[number];
