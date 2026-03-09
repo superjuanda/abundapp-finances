@@ -3,6 +3,7 @@ import { BottomNav, type TabId } from "@/components/BottomNav";
 import { ExpenseForm } from "@/components/ExpenseForm";
 import { HistoryScreen } from "@/components/HistoryScreen";
 import { SummaryScreen } from "@/components/SummaryScreen";
+import { ComingSoonScreen } from "@/components/ComingSoonScreen";
 import { useExpenses } from "@/hooks/useExpenses";
 
 const Index = () => {
@@ -16,6 +17,7 @@ const Index = () => {
         <HistoryScreen expenses={expenses} onUpdate={updateExpense} onDelete={deleteExpense} />
       )}
       {activeTab === "summary" && <SummaryScreen expenses={expenses} />}
+      {activeTab === "coming-soon" && <ComingSoonScreen />}
       <BottomNav active={activeTab} onChange={setActiveTab} />
     </div>
   );
