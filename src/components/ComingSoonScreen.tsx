@@ -1,5 +1,16 @@
-import { Sparkles, ScanLine, Wallet, BarChart3, Lightbulb, Target, Zap, Layout, Trophy, Download, Users, Tags, Wifi, Bell, GripVertical, Palette, Search, Paperclip } from "lucide-react";
+import { useState } from "react";
+import { ThumbsUp, ThumbsDown, Sparkles, ScanLine, Wallet, BarChart3, Lightbulb, Target, Zap, Layout, Trophy, Download, Users, Tags, Wifi, Bell, GripVertical, Palette, Search, Paperclip } from "lucide-react";
 import abundappWhite from "@/assets/Abundapp_white.png";
+
+const STORAGE_KEY = "abundapp_votes";
+
+function loadVotes(): Record<string, number> {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
 
 const sections = [
   {
