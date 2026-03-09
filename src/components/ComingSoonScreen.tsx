@@ -229,6 +229,8 @@ const sections = [
 
 export function ComingSoonScreen() {
   const [votes, setVotes] = useState<Record<string, number>>(loadVotes);
+  const [ideas, setIdeas] = useState<Idea[]>(loadIdeas);
+  const [newIdea, setNewIdea] = useState("");
 
   const vote = (key: string, delta: number) => {
     setVotes((prev) => {
@@ -236,6 +238,26 @@ export function ComingSoonScreen() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       return next;
     });
+  };
+
+  const addIdea = () => {
+    const text = newIdea.trim();
+    if (!text) return;
+    const idea: Idea = {
+      id: Date.now().toString(),
+      text,
+      date: new Date().toLocaleDateString("es-CO", { day: "numeric", month: "short" }),
+    };
+    const next = [...ideas, idea];
+    setIdeas(next);
+    localStorage.setItem(IDEAS_KEY, JSON.stringify(next));
+    setNewIdea("");
+  };
+
+  const deleteIdea = (id: string) => {
+    const next = ideas.filter((i) => i.id !== id);
+    setIdeas(next);
+    localStorage.setItem(IDEAS_KEY, JSON.stringify(next));
   };
 
   return (
