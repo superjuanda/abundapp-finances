@@ -4,7 +4,7 @@ import { es } from "date-fns/locale";
 import { ChevronLeft, ChevronRight, Pencil, Trash2, Inbox } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES } from "@/data/categories";
+import { CATEGORIES, USER_PROFILES } from "@/data/categories";
 import type { Expense } from "@/hooks/useExpenses";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";

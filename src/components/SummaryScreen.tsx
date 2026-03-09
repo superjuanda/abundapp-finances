@@ -3,7 +3,7 @@ import { format, startOfMonth, endOfMonth, addMonths, subMonths } from "date-fns
 import { es } from "date-fns/locale";
 import { ChevronLeft, ChevronRight, Users, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES } from "@/data/categories";
+import { CATEGORIES, USER_PROFILES } from "@/data/categories";
 import type { Expense } from "@/hooks/useExpenses";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 import logoWhite from "@/assets/Abundapp_white.png";
