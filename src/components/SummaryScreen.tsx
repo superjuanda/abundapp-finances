@@ -41,14 +41,15 @@ export function SummaryScreen({ expenses }: SummaryScreenProps) {
   }, [monthExpenses]);
 
   const topCategories = useMemo(() => {
-    const map: Record<string, number> = {};
+    const map: Record<string, { value: number; emoji: string }> = {};
     monthExpenses.forEach((e) => {
       const cat = CATEGORIES.find((c) => c.id === e.category);
-      const name = cat?.name || e.category;
-      map[name] = (map[name] || 0) + e.amount;
+      const name = cat ? `${cat.emoji} ${cat.name}` : e.category;
+      if (!map[name]) map[name] = { value: 0, emoji: cat?.emoji || "💸" };
+      map[name].value += e.amount;
     });
     return Object.entries(map)
-      .map(([name, value]) => ({ name, value }))
+      .map(([name, { value }]) => ({ name, value }))
       .sort((a, b) => b.value - a.value)
       .slice(0, 5);
   }, [monthExpenses]);
