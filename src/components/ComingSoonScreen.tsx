@@ -1,5 +1,16 @@
-import { Sparkles, ScanLine, Wallet, BarChart3, Lightbulb, Target, Zap, Layout, Trophy, Download, Users, Tags, Wifi, Bell, GripVertical, Palette, Search, Paperclip } from "lucide-react";
+import { useState } from "react";
+import { ThumbsUp, ThumbsDown, Sparkles, ScanLine, Wallet, BarChart3, Lightbulb, Target, Zap, Layout, Trophy, Download, Users, Tags, Wifi, Bell, GripVertical, Palette, Search, Paperclip } from "lucide-react";
 import abundappWhite from "@/assets/Abundapp_white.png";
+
+const STORAGE_KEY = "abundapp_votes";
+
+function loadVotes(): Record<string, number> {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
 
 const sections = [
   {
@@ -202,6 +213,16 @@ const sections = [
 ];
 
 export function ComingSoonScreen() {
+  const [votes, setVotes] = useState<Record<string, number>>(loadVotes);
+
+  const vote = (key: string, delta: number) => {
+    setVotes((prev) => {
+      const next = { ...prev, [key]: (prev[key] ?? 0) + delta };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-screen pb-24">
       {/* Header */}
@@ -224,31 +245,61 @@ export function ComingSoonScreen() {
               </h2>
             )}
             <div className="space-y-3">
-              {section.items.map((item, ii) => (
-                <div
-                  key={ii}
-                  className="bg-card rounded-xl border border-border p-4 shadow-sm"
-                >
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <item.icon size={16} className="text-primary" />
+              {section.items.map((item, ii) => {
+                const key = item.title;
+                const count = votes[key] ?? 0;
+                return (
+                  <div
+                    key={ii}
+                    className="bg-card rounded-xl border border-border p-4 shadow-sm"
+                  >
+                    <div className="flex items-start gap-2.5 mb-2">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <item.icon size={16} className="text-primary" />
+                      </div>
+                      <h3 className="text-sm font-semibold text-foreground leading-tight flex-1">
+                        {item.title}
+                      </h3>
+                      {/* Voting */}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                          onClick={() => vote(key, -1)}
+                          className="w-7 h-7 rounded-lg flex items-center justify-center active:scale-95 transition-transform bg-destructive/10 hover:bg-destructive/20"
+                        >
+                          <ThumbsDown size={13} className="text-destructive" />
+                        </button>
+                        <span
+                          className={`text-sm font-bold w-6 text-center tabular-nums ${
+                            count > 0
+                              ? "text-primary"
+                              : count < 0
+                              ? "text-destructive"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          {count}
+                        </span>
+                        <button
+                          onClick={() => vote(key, 1)}
+                          className="w-7 h-7 rounded-lg flex items-center justify-center active:scale-95 transition-transform bg-primary/10 hover:bg-primary/20"
+                        >
+                          <ThumbsUp size={13} className="text-primary" />
+                        </button>
+                      </div>
                     </div>
-                    <h3 className="text-sm font-semibold text-foreground leading-tight">
-                      {item.title}
-                    </h3>
+                    <ul className="space-y-1 ml-10">
+                      {item.bullets.map((b, bi) => (
+                        <li
+                          key={bi}
+                          className="text-xs text-muted-foreground leading-relaxed"
+                        >
+                          • {b}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className="space-y-1 ml-10">
-                    {item.bullets.map((b, bi) => (
-                      <li
-                        key={bi}
-                        className="text-xs text-muted-foreground leading-relaxed"
-                      >
-                        • {b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}
